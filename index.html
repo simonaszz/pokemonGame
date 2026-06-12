@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="lt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Pokémon</title>
+
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+
+  <body>
+    <div class="app-layout">
+      <aside class="sidebar" aria-label="Pagrindinė navigacija">
+        <header class="sidebar-header">
+          <h1>Pokémon trenerio valdymas</h1>
+          <p>Trenerio valdymo skydelis</p>
+        </header>
+
+        <nav class="main-nav">
+          <ul>
+            <li><button type="button" data-page="home">Pradžia</button></li>
+            <li><button type="button" data-page="collection">Mano kolekcija</button></li>
+            <li><button type="button" data-page="dashboard">Valdymo skydelis</button></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="page-header">
+          <section class="trainer-card" aria-labelledby="trainer-title">
+            <div>
+              <p class="eyebrow">Trenerio profilis</p>
+              <h2 id="trainer-title">Treneris Lv. 1</h2>
+            </div>
+
+            <div class="xp-panel">
+              <span>XP</span>
+
+              <div class="xp-bar" aria-label="Trenerio XP progresas">
+                <div class="xp-bar-fill"></div>
+              </div>
+
+              <span>0 / 100</span>
+            </div>
+          </section>
+        </header>
+
+        <section class="search-section" aria-labelledby="search-title">
+          <h2 id="search-title">Ieškoti Pokémono</h2>
+
+          <form class="search-form">
+            <label for="pokemon-search">Pokémono vardas</label>
+
+            <input id="pokemon-search" type="search" placeholder="Įvesk Pokémono vardą..." />
+
+            <button type="submit">Ieškoti</button>
+          </form>
+
+          <button type="button" class="random-btn">Atsitiktinis susitikimas</button>
+        </section>
+
+        <section class="wild-section" aria-labelledby="wild-title">
+          <div class="section-heading">
+            <p class="eyebrow">Laukinė zona</p>
+            <h2 id="wild-title">Laukiniai Pokémonai</h2>
+          </div>
+
+          <div id="pokemon-grid" class="pokemon-grid">
+            <!-- Čia dėsime Pokémon korteles -->
+          </div>
+        </section>
+
+        <section class="collection-section" aria-labelledby="collection-title">
+          <div class="section-heading">
+            <p class="eyebrow">Inventorius</p>
+            <h2 id="collection-title">Mano kolekcija</h2>
+          </div>
+
+          <div id="collection-list" class="collection-list">
+            <!-- Čia įdėsime pagautus Pokémonus -->
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="pokemon-modal" class="pokemon-modal">
+      <!-- Čia bus modal lango turinys -->
+    </dialog>
+
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>

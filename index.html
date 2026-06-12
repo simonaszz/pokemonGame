@@ -27,25 +27,6 @@
       </aside>
 
       <main class="main-content">
-        <header class="page-header">
-          <section class="trainer-card" aria-labelledby="trainer-title">
-            <div>
-              <p class="eyebrow">Trenerio profilis</p>
-              <h2 id="trainer-title">Treneris Lv. 1</h2>
-            </div>
-
-            <div class="xp-panel">
-              <span>XP</span>
-
-              <div class="xp-bar" aria-label="Trenerio XP progresas">
-                <div class="xp-bar-fill"></div>
-              </div>
-
-              <span>0 / 100</span>
-            </div>
-          </section>
-        </header>
-
         <section class="search-section" aria-labelledby="search-title">
           <h2 id="search-title">Ieškoti Pokémono</h2>
 
@@ -82,6 +63,60 @@
           </div>
         </section>
       </main>
+
+      <aside class="dashboard-panel" aria-label="Trenerio valdymo skydelis">
+        <section class="trainer-card" aria-labelledby="trainer-title">
+          <div>
+            <p class="eyebrow">Trenerio profilis</p>
+            <h2 id="trainer-title">Treneris Lv. 1</h2>
+          </div>
+
+          <div class="xp-panel">
+            <span>XP</span>
+
+            <div class="xp-bar" aria-label="Trenerio XP progresas">
+              <div class="xp-bar-fill"></div>
+            </div>
+
+            <span>0 / 100</span>
+          </div>
+        </section>
+
+        <section class="stats-card" aria-labelledby="stats-title">
+          <p class="eyebrow">Statistika</p>
+          <h2 id="stats-title">Progresas</h2>
+
+          <ul class="stats-list">
+            <li>
+              <span>Pagauta</span>
+              <strong id="caught-count">0</strong>
+            </li>
+
+            <li>
+              <span>Stipriausias</span>
+              <strong id="strongest-pokemon">-</strong>
+            </li>
+
+            <li>
+              <span>Aukščiausias lygis</span>
+              <strong id="highest-level">-</strong>
+            </li>
+
+            <li>
+              <span>Bendra XP</span>
+              <strong id="total-xp">0</strong>
+            </li>
+          </ul>
+        </section>
+
+        <section class="upgrade-card" aria-labelledby="upgrade-title">
+          <p class="eyebrow">Upgrade’ai</p>
+          <h2 id="upgrade-title">Trenerio patobulinimai</h2>
+
+          <button type="button" class="upgrade-btn">Didesnė pagavimo tikimybė</button>
+          <button type="button" class="upgrade-btn">Greitesnis treniravimas</button>
+        </section>
+      </aside>
     </div>
 
     <dialog id="pokemon-modal" class="pokemon-modal">

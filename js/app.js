@@ -4,12 +4,24 @@ import { mapPokemon } from './pokemonMapper.js';
 import { appState } from './appState.js';
 import { renderPokemonCards, renderLoading } from './homeView.js';
 import { loadTrainer } from './storageService.js';
-import { renderCollection } from './collectionView.js';
+import { renderCollection, renderCollectionLoading } from './collectionView.js';
 
 async function initApp() {
   console.log('Trenerio objektas:', trainer);
 
   renderLoading();
+  renderCollectionLoading();
+
+  const savedTrainer = loadTrainer();
+
+  if (savedTrainer !== null) {
+    trainer.name = savedTrainer.name;
+    trainer.level = savedTrainer.level;
+    trainer.xp = savedTrainer.xp;
+    trainer.collection = savedTrainer.collection;
+  }
+
+  renderCollection(trainer.collection);
 
   const apiPokemons = await getRandomPokemons(10);
 
@@ -21,18 +33,6 @@ async function initApp() {
 
   console.log('Aplikacijos būsena:', appState);
 
-  const savedTrainer = loadTrainer();
-
-  if (savedTrainer !== null) {
-    trainer.name = savedTrainer.name;
-    trainer.level = savedTrainer.level;
-    trainer.xp = savedTrainer.xp;
-    trainer.collection = savedTrainer.collection;
-
-    renderCollection(trainer.collection);
-  }
-
   renderPokemonCards(pokemons);
 }
-
 initApp();

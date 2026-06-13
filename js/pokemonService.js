@@ -1,5 +1,6 @@
 import { trainer } from './trainerState.js';
 import { saveTrainer } from './storageService.js';
+import { addTrainerXp } from './trainerService.js';
 
 export function catchPokemon(pokemon) {
   const alreadyCaught = trainer.collection.some((caughtPokemon) => {
@@ -11,6 +12,8 @@ export function catchPokemon(pokemon) {
   }
 
   trainer.collection.push(pokemon);
+
+  addTrainerXp(25);
 
   saveTrainer(trainer);
 

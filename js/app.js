@@ -5,11 +5,13 @@ import { appState } from './appState.js';
 import { renderPokemonCards, renderLoading } from './homeView.js';
 import { loadTrainer } from './storageService.js';
 import { renderCollection, renderCollectionLoading } from './collectionView.js';
+import { renderTrainer } from './trainerView.js';
 
 async function initApp() {
   console.log('Trenerio objektas:', trainer);
 
   renderLoading();
+
   renderCollectionLoading();
 
   const savedTrainer = loadTrainer();
@@ -22,6 +24,8 @@ async function initApp() {
   }
 
   renderCollection(trainer.collection);
+
+  renderTrainer(trainer);
 
   const apiPokemons = await getRandomPokemons(10);
 

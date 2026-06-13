@@ -3,6 +3,7 @@ import { trainer } from './trainerState.js';
 import { catchPokemon } from './pokemonService.js';
 import { renderCollection } from './collectionView.js';
 import { showNotification, capitalize } from './notificationView.js';
+import { renderTrainer } from './trainerView.js';
 
 export function renderLoading() {
   const pokemonGrid = document.querySelector('#pokemon-grid');
@@ -70,6 +71,7 @@ function attachCatchEvents() {
 
       if (wasCaught) {
         renderCollection(trainer.collection);
+        renderTrainer(trainer);
 
         showNotification(
           `<strong>${capitalize(selectedPokemon.name)}</strong> sėkmingai pridėtas į kolekciją`,

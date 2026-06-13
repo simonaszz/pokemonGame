@@ -1,56 +1,56 @@
 const BASE_URL = 'https://pokeapi.co/api/v2';
 
-export async function getPokemonCount() {
+export async function getPokemonList(limit = 10, offset = 0) {
   try {
-    const response = await fetch(`${BASE_URL}/pokemon?limit=1`);
+    const response = await fetch(`${BASE_URL}/pokemon?limit=${limit}&offset=${offset}`);
 
     if (!response.ok) {
-      throw new Error('Nepavyko gauti Pokemon kiekio');
+      throw new Error('Nepavyko gauti Pokémon sąrašo');
     }
 
-    const data = await response.json();
-
-    returncdata.count;
+    return await response.json();
   } catch (error) {
-    console.error('klaida gaunant pokemon kieki:', error);
-    return 0;
-  }
-}
-
-export async function getPokemonById(id) {
-  try {
-    const response = await fetch(`${BASE_URL}/pokemon/${id}`);
-
-    if (!response.ok) {
-      throw new Error('Pokemonas nerastas');
-    }
-
-    const pokemon = await response.json();
-
-    return pokemon;
-  } catch (error) {
-    console.error('klaida gaunant Pokemona:', error);
+    console.error('Klaida gaunant Pokémon sąrašą:', error);
     return null;
   }
 }
 
-export async function getRandomPokemon(count) {
-  const pokemon = [];
-  const pokemonCount = await getPokemonCount();
+export async function getPokemonByUrl(url) {
+  try {
+    const response = await fetch(url);
 
-  if (pokemonCount === 0) {
-    return pokemons;
-  }
-
-  for (let i = 0; i < count; i++) {
-    const randomId = Math.floor(Math.random() * pokemonCount) + 1;
-
-    const pokemon = await getPokemonById(randomId);
-
-    if (pokemon !== null) {
-      pokemons.push(pokemon);
+    if (!response.ok) {
+      throw new Error('Pokémon nerastas');
     }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Klaida gaunant Pokémon:', error);
+    return null;
+  }
+}
+
+export async function getRandomPokemons(count) {
+  const firstPage = await getPokemonList(1, 0);
+
+  if (firstPage === null) {
+    return [];
   }
 
-  return pokemons;
+  const maxOffset = firstPage.count - count;
+  const randomOffset = Math.floor(Math.random() * maxOffset);
+
+  const pokemonList = await getPokemonList(count, randomOffset);
+
+  if (pokemonList === null) {
+    return [];
+  }
+
+  const pokemonRequests = pokemonList.results.map((pokemonInfo) => {
+    return getPokemonByUrl(pokemonInfo.url);
+  });
+
+  const pokemons = await Promise.all(pokemonRequests);
+
+  return pokemons.filter((pokemon) => pokemon !== null);
 }

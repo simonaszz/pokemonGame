@@ -1,17 +1,25 @@
 import { trainer } from './trainerState.js';
-import { getPokemonById } from './api.js';
+import { getRandomPokemons } from './api.js';
 import { mapPokemon } from './pokemonMapper.js';
-import { renderPokemonCard } from './homeView.js';
+import { appState } from './appState.js';
+import { renderPokemonCards, renderLoading } from './homeView.js';
 
 async function initApp() {
   console.log('Trenerio objektas:', trainer);
 
-  const apiPokemon = await getPokemonById(25);
-  const pokemon = mapPokemon(apiPokemon);
+  renderLoading();
 
-  console.log('Švarus Pokémon objektas:', pokemon);
+  const apiPokemons = await getRandomPokemons(10);
 
-  renderPokemonCard(pokemon);
+  const pokemons = apiPokemons.map((apiPokemon) => {
+    return mapPokemon(apiPokemon);
+  });
+
+  appState.wildPokemons = pokemons;
+
+  console.log('Aplikacijos būsena:', appState);
+
+  renderPokemonCards(pokemons);
 }
 
 initApp();

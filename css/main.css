@@ -205,6 +205,41 @@ button {
   padding: 24px;
 }
 
+.pokemon-card {
+  padding: 18px;
+  border: 1px solid #334155;
+  border-radius: 20px;
+  background-color: #0f172a;
+}
+
+.pokemon-card-image {
+  display: block;
+  width: 100%;
+  max-width: 180px;
+  margin: 0 auto 16px;
+}
+
+.pokemon-card-content h3 {
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+
+.pokemon-card-content p {
+  margin-bottom: 6px;
+  color: #cbd5e1;
+}
+
+.catch-btn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 12px;
+  background-color: #facc15;
+  color: #111827;
+  font-weight: 700;
+}
+
 @media (min-width: 768px) {
   .pokemon-grid,
   .collection-list {

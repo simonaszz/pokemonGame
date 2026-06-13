@@ -14,6 +14,7 @@ import { renderCollection, renderCollectionLoading } from './collectionView.js';
 import { renderTrainer } from './trainerView.js';
 
 import { catchPokemon } from './pokemonService.js';
+
 import { showNotification, capitalize } from './notificationView.js';
 
 async function initApp() {
@@ -64,16 +65,32 @@ function handleCatchClick(event) {
     return;
   }
 
-  const wasCaught = catchPokemon(selectedPokemon);
+  const result = catchPokemon(selectedPokemon);
 
-  if (wasCaught) {
-    renderCollection(trainer.collection);
-    renderTrainer(trainer);
+  if (result.success === false) {
+    showNotification(`<strong>${capitalize(result.pokemon.name)}</strong> jau yra kolekcijoje`, 'error');
 
-    showNotification(`<strong>${capitalize(selectedPokemon.name)}</strong> sėkmingai pridėtas į kolekciją`, 'success');
-  } else {
-    showNotification(`<strong>${capitalize(selectedPokemon.name)}</strong> jau yra kolekcijoje`, 'error');
+    return;
   }
+
+  renderCollection(trainer.collection);
+  renderTrainer(trainer);
+
+  let message = `
+    <strong>${capitalize(result.pokemon.name)}</strong> sėkmingai pridėtas į kolekciją
+    <p>+${result.xp.xpGained} XP</p>
+  `;
+
+  if (result.xp.leveledUp) {
+    const reachedLevel = result.xp.levelsGained.at(-1);
+
+    message += `
+      <p><strong>Level Up!</strong></p>
+      <p>Pasiektas ${reachedLevel} lygis</p>
+    `;
+  }
+
+  showNotification(message, 'success');
 }
 
 document.addEventListener('click', handleCatchClick);

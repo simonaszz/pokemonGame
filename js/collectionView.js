@@ -32,34 +32,67 @@ export function renderCollection(collection) {
 
 function createCollectionCard(pokemon) {
   return `
-    <article class="pokemon-card">
-      <img
-        class="pokemon-card-image"
-        src="${pokemon.image}"
-        alt="${pokemon.name}"
-      />
+    <article class="pokemon-card collection-card">
+      <div class="collection-card-header">
+        <img
+          class="pokemon-card-image"
+          src="${pokemon.image}"
+          alt="${pokemon.name}"
+        />
 
-      <div class="pokemon-card-content">
-        <h3>${pokemon.name}</h3>
-
-        <p>Tipai: ${pokemon.types.join(', ')}</p>
-        <p>Lygis: ${pokemon.level}</p>
-        <p>XP: ${pokemon.xp}</p>
-        <p>HP: ${pokemon.stats.hp}</p>
-        <p>Attack: ${pokemon.stats.attack}</p>
-        <p>Defense: ${pokemon.stats.defense}</p>
-        <p>Sugauta: ${formatCaughtAt(pokemon.caughtAt)}</p>
-
-        <button
-          type="button"
-          class="details-btn"
-          data-pokemon-id="${pokemon.id}"
-        >
-          Detaliau
-        </button>
+        <div>
+          <h3>${pokemon.name}</h3>
+          <p class="collection-card-level">Level ${pokemon.level}</p>
+        </div>
       </div>
+
+      <div class="type-list">
+        ${createTypeBadges(pokemon.types)}
+      </div>
+
+      <div class="collection-card-stats">
+        <div>
+          <span>XP</span>
+          <strong>${pokemon.xp}</strong>
+        </div>
+
+        <div>
+          <span>HP</span>
+          <strong>${pokemon.stats.hp}</strong>
+        </div>
+
+        <div>
+          <span>ATK</span>
+          <strong>${pokemon.stats.attack}</strong>
+        </div>
+
+        <div>
+          <span>DEF</span>
+          <strong>${pokemon.stats.defense}</strong>
+        </div>
+      </div>
+
+      <p class="caught-time">
+        Sugauta: ${formatCaughtAt(pokemon.caughtAt)}
+      </p>
+
+      <button
+        type="button"
+        class="details-btn"
+        data-pokemon-id="${pokemon.id}"
+      >
+        Detaliau
+      </button>
     </article>
   `;
+}
+
+function createTypeBadges(types) {
+  return types
+    .map((type) => {
+      return `<span class="type-badge">${type}</span>`;
+    })
+    .join('');
 }
 
 function formatCaughtAt(caughtAt) {

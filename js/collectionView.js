@@ -25,30 +25,45 @@ export function renderCollection(collection) {
 
   collectionList.innerHTML = collection
     .map((pokemon) => {
-      return `
-        <article class="pokemon-card">
-          <img
-            class="pokemon-card-image"
-            src="${pokemon.image}"
-            alt="${pokemon.name}"
-          />
-
-          <div class="pokemon-card-content">
-            <h3>${pokemon.name}</h3>
-
-            <p>Lygis: ${pokemon.level}</p>
-            <p>XP: ${pokemon.xp}</p>
-
-            <button
-              type="button"
-              class="release-btn"
-              data-pokemon-id="${pokemon.id}"
-            >
-              Paleisti
-            </button>
-          </div>
-        </article>
-      `;
+      return createCollectionCard(pokemon);
     })
     .join('');
+}
+
+function createCollectionCard(pokemon) {
+  return `
+    <article class="pokemon-card">
+      <img
+        class="pokemon-card-image"
+        src="${pokemon.image}"
+        alt="${pokemon.name}"
+      />
+
+      <div class="pokemon-card-content">
+        <h3>${pokemon.name}</h3>
+
+        <p>Lygis: ${pokemon.level}</p>
+        <p>XP: ${pokemon.xp}</p>
+        <p>HP: ${pokemon.stats.hp}</p>
+        <p>Attack: ${pokemon.stats.attack}</p>
+        <p>Defense: ${pokemon.stats.defense}</p>
+
+        <button
+          type="button"
+          class="train-btn"
+          data-pokemon-id="${pokemon.id}"
+         >
+          Treniruoti
+        </button>
+
+        <button
+          type="button"
+          class="release-btn"
+          data-pokemon-id="${pokemon.id}"
+        >
+          Paleisti
+        </button>
+      </div>
+    </article>
+  `;
 }

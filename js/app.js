@@ -14,7 +14,7 @@ import { renderCollection, renderCollectionLoading } from './collectionView.js';
 import { renderTrainer } from './trainerView.js';
 import { renderDashboard } from './dashboardView.js';
 
-import { catchPokemon, releasePokemon } from './pokemonService.js';
+import { catchPokemon, releasePokemon, trainPokemon } from './pokemonService.js';
 
 import { showNotification, capitalize } from './notificationView.js';
 
@@ -125,7 +125,52 @@ function handleReleaseClick(event) {
   showNotification(`<strong>${capitalize(result.pokemon.name)}</strong> paleistas iš kolekcijos`, 'success');
 }
 
+function handleTrainClick(event) {
+  const trainButton = event.target.closest('.train-btn');
+
+  if (trainButton === null) {
+    return;
+  }
+
+  const pokemonId = Number(trainButton.dataset.pokemonId);
+
+  if (Number.isNaN(pokemonId)) {
+    showNotification('Neteisingas Pokémon ID', 'error');
+
+    return;
+  }
+
+  const result = trainPokemon(pokemonId);
+
+  if (result.success === false) {
+    showNotification('Pokémonas nerastas kolekcijoje', 'error');
+
+    return;
+  }
+
+  renderCollection(trainer.collection);
+  renderDashboard(trainer);
+
+  let message = `
+    <strong>${capitalize(result.pokemon.name)}</strong> treniruotas
+    <p>+${result.xp.xpGained} XP</p>
+  `;
+
+  if (result.xp.leveledUp) {
+    const reachedLevel = result.xp.levelsGained.at(-1);
+
+    message += `
+      <p><strong>Level Up!</strong></p>
+      <p>Pasiektas ${reachedLevel} lygis</p>
+      <p>Stats padidėjo</p>
+    `;
+  }
+
+  showNotification(message, 'success');
+}
+
 document.addEventListener('click', handleCatchClick);
 document.addEventListener('click', handleReleaseClick);
+document.addEventListener('click', handleTrainClick);
 
 initApp();

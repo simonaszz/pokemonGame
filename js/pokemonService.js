@@ -4,6 +4,9 @@ import { addTrainerXp } from './trainerService.js';
 
 const XP_FOR_CATCH = 25;
 
+const XP_FOR_TRAINING = 20;
+const STAT_INCREASE_ON_LEVEL_UP = 2;
+
 export function catchPokemon(pokemon) {
   const alreadyCaught = trainer.collection.some((caughtPokemon) => {
     return caughtPokemon.id === pokemon.id;
@@ -52,4 +55,48 @@ export function releasePokemon(pokemonId) {
     success: true,
     pokemon: releasedPokemon,
   };
+}
+
+export function trainPokemon(pokemonId) {
+  const pokemon = trainer.collection.find((collectionPokemon) => {
+    return collectionPokemon.id === pokemonId;
+  });
+
+  if (pokemon === undefined) {
+    return {
+      success: false,
+      reason: 'not_found',
+    };
+  }
+
+  pokemon.xp += XP_FOR_TRAINING;
+
+  const levelsGained = [];
+
+  while (pokemon.xp >= getRequiredPokemonXp(pokemon)) {
+    pokemon.xp -= getRequiredPokemonXp(pokemon);
+    pokemon.level += 1;
+
+    pokemon.stats.hp += STAT_INCREASE_ON_LEVEL_UP;
+    pokemon.stats.attack += STAT_INCREASE_ON_LEVEL_UP;
+    pokemon.stats.defense += STAT_INCREASE_ON_LEVEL_UP;
+
+    levelsGained.push(pokemon.level);
+  }
+
+  saveTrainer(trainer);
+
+  return {
+    success: true,
+    pokemon: pokemon,
+    xp: {
+      xpGained: XP_FOR_TRAINING,
+      leveledUp: levelsGained.length > 0,
+      levelsGained: levelsGained,
+    },
+  };
+}
+
+function getRequiredPokemonXp(pokemon) {
+  return pokemon.level * 50;
 }

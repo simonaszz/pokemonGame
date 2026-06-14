@@ -95,6 +95,26 @@ button {
   gap: 18px;
 }
 
+.train-btn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border: 1px solid #22c55e;
+  border-radius: 12px;
+  background-color: transparent;
+  color: #bbf7d0;
+  font-weight: 700;
+}
+
+.train-btn:hover {
+  background-color: #22c55e;
+  color: #052e16;
+}
+
+.train-btn:focus-visible {
+  outline: 3px solid #86efac;
+  outline-offset: 3px;
+}
 .eyebrow {
   margin-bottom: 8px;
   color: #38bdf8;

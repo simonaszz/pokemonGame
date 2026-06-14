@@ -4,7 +4,7 @@ export function renderLoading() {
   pokemonGrid.innerHTML = `
     <div class="loader-card">
       <div class="loader-spinner"></div>
-      <p>Atkeliauja Pokémonai...</p>
+      <p>Atkeliauja Pokemonai...</p>
     </div>
   `;
 }

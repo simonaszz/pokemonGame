@@ -9,13 +9,13 @@ export function renderCollectionLoading() {
   `;
 }
 
-export function renderCollection(collection) {
+export function renderCollection(collection, options = {}) {
   const collectionList = document.querySelector('#collection-list');
 
   if (collection.length === 0) {
     collectionList.innerHTML = `
       <div class="empty-state">
-        <p>Dar neturi pagautų Pokémonų.</p>
+        <p>Dar neturi pagautų Pokemonų.</p>
         <span>Spausk „Pagauti“, kad pradėtum kolekciją.</span>
       </div>
     `;
@@ -23,7 +23,41 @@ export function renderCollection(collection) {
     return;
   }
 
-  collectionList.innerHTML = collection
+  const searchValue = options.search ?? '';
+  const sortValue = options.sort ?? 'caught-newest';
+
+  const filteredCollection = collection
+    .filter((pokemon) => {
+      return pokemon.name.toLowerCase().includes(searchValue.toLowerCase());
+    })
+    .sort((firstPokemon, secondPokemon) => {
+      if (sortValue === 'level-highest') {
+        return secondPokemon.level - firstPokemon.level;
+      }
+
+      if (sortValue === 'name-az') {
+        return firstPokemon.name.localeCompare(secondPokemon.name);
+      }
+
+      if (sortValue === 'attack-highest') {
+        return secondPokemon.stats.attack - firstPokemon.stats.attack;
+      }
+
+      return getCaughtTime(secondPokemon) - getCaughtTime(firstPokemon);
+    });
+
+  if (filteredCollection.length === 0) {
+    collectionList.innerHTML = `
+      <div class="empty-state">
+        <p>Pagal paiešką nieko nerasta.</p>
+        <span>Pabandyk kitą Pokemon vardą.</span>
+      </div>
+    `;
+
+    return;
+  }
+
+  collectionList.innerHTML = filteredCollection
     .map((pokemon) => {
       return createCollectionCard(pokemon);
     })
@@ -93,6 +127,14 @@ function createTypeBadges(types) {
       return `<span class="type-badge">${type}</span>`;
     })
     .join('');
+}
+
+function getCaughtTime(pokemon) {
+  if (pokemon.caughtAt === undefined) {
+    return 0;
+  }
+
+  return new Date(pokemon.caughtAt).getTime();
 }
 
 function formatCaughtAt(caughtAt) {

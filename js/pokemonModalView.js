@@ -18,7 +18,7 @@ export function renderPokemonModal(pokemon) {
       />
 
       <div class="pokemon-modal-info">
-        <p class="eyebrow">Pokémon informacija</p>
+        <p class="eyebrow">Pokemon informacija</p>
         <h2>${capitalize(pokemon.name)}</h2>
 
         <p>Tipai: ${pokemon.types.join(', ')}</p>

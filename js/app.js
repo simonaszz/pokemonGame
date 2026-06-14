@@ -35,7 +35,7 @@ async function initApp() {
     trainer.collection = savedTrainer.collection;
   }
 
-  renderCollection(trainer.collection);
+  renderFilteredCollection();
   renderTrainer(trainer);
   renderDashboard(trainer);
 
@@ -58,6 +58,13 @@ async function loadRandomPokemons() {
   renderPokemonCards(appState.wildPokemons);
 }
 
+function renderFilteredCollection() {
+  renderCollection(trainer.collection, {
+    search: appState.collectionSearch,
+    sort: appState.collectionSort,
+  });
+}
+
 async function handlePokemonSearch(event) {
   event.preventDefault();
 
@@ -65,7 +72,7 @@ async function handlePokemonSearch(event) {
   const searchValue = searchInput.value.trim();
 
   if (searchValue === '') {
-    showNotification('Įvesk Pokémon vardą', 'error');
+    showNotification('Įvesk Pokemon vardą', 'error');
 
     return;
   }
@@ -98,7 +105,19 @@ async function handlePokemonSearch(event) {
 async function handleRandomEncounterClick() {
   await loadRandomPokemons();
 
-  showNotification('Atsirado nauji laukiniai Pokémonai', 'success');
+  showNotification('Atsirado nauji laukiniai Pokemonai', 'success');
+}
+
+function handleCollectionSearchInput(event) {
+  appState.collectionSearch = event.target.value.trim();
+
+  renderFilteredCollection();
+}
+
+function handleCollectionSortChange(event) {
+  appState.collectionSort = event.target.value;
+
+  renderFilteredCollection();
 }
 
 function handleCatchClick(event) {
@@ -126,7 +145,7 @@ function handleCatchClick(event) {
     return;
   }
 
-  renderCollection(trainer.collection);
+  renderFilteredCollection();
   renderTrainer(trainer);
   renderDashboard(trainer);
 
@@ -157,7 +176,7 @@ function handleReleaseClick(event) {
   const pokemonId = Number(releaseButton.dataset.pokemonId);
 
   if (Number.isNaN(pokemonId)) {
-    showNotification('Neteisingas Pokémon ID', 'error');
+    showNotification('Neteisingas Pokemon ID', 'error');
 
     return;
   }
@@ -165,12 +184,12 @@ function handleReleaseClick(event) {
   const result = releasePokemon(pokemonId);
 
   if (result.success === false) {
-    showNotification('Pokémonas nerastas kolekcijoje', 'error');
+    showNotification('Pokemonas nerastas kolekcijoje', 'error');
 
     return;
   }
 
-  renderCollection(trainer.collection);
+  renderFilteredCollection();
   renderDashboard(trainer);
 
   if (appState.selectedPokemonId === pokemonId) {
@@ -191,7 +210,7 @@ function handleTrainClick(event) {
   const pokemonId = Number(trainButton.dataset.pokemonId);
 
   if (Number.isNaN(pokemonId)) {
-    showNotification('Neteisingas Pokémon ID', 'error');
+    showNotification('Neteisingas Pokemon ID', 'error');
 
     return;
   }
@@ -199,12 +218,12 @@ function handleTrainClick(event) {
   const result = trainPokemon(pokemonId);
 
   if (result.success === false) {
-    showNotification('Pokémonas nerastas kolekcijoje', 'error');
+    showNotification('Pokemonas nerastas kolekcijoje', 'error');
 
     return;
   }
 
-  renderCollection(trainer.collection);
+  renderFilteredCollection();
   renderDashboard(trainer);
 
   if (appState.selectedPokemonId === pokemonId) {
@@ -245,7 +264,7 @@ function handleDetailsClick(event) {
   const pokemonId = Number(detailsButton.dataset.pokemonId);
 
   if (Number.isNaN(pokemonId)) {
-    showNotification('Neteisingas Pokémon ID', 'error');
+    showNotification('Neteisingas Pokemon ID', 'error');
 
     return;
   }
@@ -255,7 +274,7 @@ function handleDetailsClick(event) {
   });
 
   if (selectedPokemon === undefined) {
-    showNotification('Pokémonas nerastas kolekcijoje', 'error');
+    showNotification('Pokemonas nerastas kolekcijoje', 'error');
 
     return;
   }
@@ -285,8 +304,12 @@ document.addEventListener('click', handleModalCloseClick);
 
 const searchForm = document.querySelector('.search-form');
 const randomButton = document.querySelector('.random-btn');
+const collectionSearchInput = document.querySelector('#collection-search');
+const collectionSortSelect = document.querySelector('#collection-sort');
 
 searchForm.addEventListener('submit', handlePokemonSearch);
 randomButton.addEventListener('click', handleRandomEncounterClick);
+collectionSearchInput.addEventListener('input', handleCollectionSearchInput);
+collectionSortSelect.addEventListener('change', handleCollectionSortChange);
 
 initApp();

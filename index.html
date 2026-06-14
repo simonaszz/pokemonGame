@@ -58,6 +58,19 @@
             <h2 id="collection-title">Mano kolekcija</h2>
           </div>
 
+          <div class="collection-controls">
+            <label for="collection-search">Ieškoti kolekcijoje</label>
+            <input id="collection-search" type="search" placeholder="Ieškoti pagauto Pokémono..." />
+
+            <label for="collection-sort">Rūšiuoti kolekciją</label>
+            <select id="collection-sort">
+              <option value="caught-newest">Naujausiai sugauti</option>
+              <option value="level-highest">Aukščiausias lygis</option>
+              <option value="name-az">Vardas A-Z</option>
+              <option value="attack-highest">Didžiausias Attack</option>
+            </select>
+          </div>
+
           <div id="collection-list" class="collection-list">
             <!-- Čia įdėsime pagautus Pokémonus -->
           </div>

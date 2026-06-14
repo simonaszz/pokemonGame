@@ -238,6 +238,35 @@ button {
   color: #cbd5e1;
 }
 
+/* Collection controls */
+
+.collection-controls {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.collection-controls label {
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.collection-controls input,
+.collection-controls select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+.collection-controls input:focus-visible,
+.collection-controls select:focus-visible {
+  outline: 3px solid #7dd3fc;
+  outline-offset: 3px;
+}
 /* Collection cards */
 
 .collection-card {
@@ -553,6 +582,11 @@ button {
   .pokemon-grid,
   .collection-list {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .collection-controls {
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
   }
 
   .collection-card-stats {

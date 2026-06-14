@@ -5,12 +5,12 @@ export async function getPokemonList(limit = 10, offset = 0) {
     const response = await fetch(`${BASE_URL}/pokemon?limit=${limit}&offset=${offset}`);
 
     if (!response.ok) {
-      throw new Error('Nepavyko gauti Pokémon sąrašo');
+      throw new Error('Nepavyko gauti Pokemon sąrašo');
     }
 
     return await response.json();
   } catch (error) {
-    console.error('Klaida gaunant Pokémon sąrašą:', error);
+    console.error('Klaida gaunant Pokemon sąrašą:', error);
     return null;
   }
 }
@@ -20,12 +20,12 @@ export async function getPokemonByUrl(url) {
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error('Pokémon nerastas');
+      throw new Error('Pokemon nerastas');
     }
 
     return await response.json();
   } catch (error) {
-    console.error('Klaida gaunant Pokémon:', error);
+    console.error('Klaida gaunant Pokemon:', error);
     return null;
   }
 }
@@ -53,4 +53,38 @@ export async function getRandomPokemons(count) {
   const pokemons = await Promise.all(pokemonRequests);
 
   return pokemons.filter((pokemon) => pokemon !== null);
+}
+
+export async function getPokemonByName(name) {
+  try {
+    const normalizedName = name.toLowerCase().trim();
+
+    const exactResponse = await fetch(`${BASE_URL}/pokemon/${normalizedName}`);
+
+    if (exactResponse.ok) {
+      return await exactResponse.json();
+    }
+
+    const listResponse = await fetch(`${BASE_URL}/pokemon?limit=100000&offset=0`);
+
+    if (!listResponse.ok) {
+      throw new Error('Nepavyko gauti Pokemon sąrašo');
+    }
+
+    const pokemonList = await listResponse.json();
+
+    const matchedPokemon = pokemonList.results.find((pokemon) => {
+      return pokemon.name.includes(normalizedName);
+    });
+
+    if (matchedPokemon === undefined) {
+      return null;
+    }
+
+    return await getPokemonByUrl(matchedPokemon.url);
+  } catch (error) {
+    console.error('Klaida ieškant Pokemon:', error);
+
+    return null;
+  }
 }

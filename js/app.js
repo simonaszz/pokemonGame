@@ -1,6 +1,6 @@
 import { trainer } from './trainerState.js';
 
-import { getRandomPokemons } from './api.js';
+import { getRandomPokemons, getPokemonByName } from './api.js';
 import { mapPokemon } from './pokemonMapper.js';
 
 import { appState } from './appState.js';
@@ -50,6 +50,43 @@ async function initApp() {
   console.log('Aplikacijos būsena:', appState);
 
   renderPokemonCards(pokemons);
+}
+
+async function handlePokemonSearch(event) {
+  event.preventDefault();
+
+  const searchInput = document.querySelector('#pokemon-search');
+  const searchValue = searchInput.value.trim();
+
+  if (searchValue === '') {
+    showNotification('Įvesk Pokémon vardą', 'error');
+
+    return;
+  }
+
+  const previousPokemons = appState.wildPokemons;
+
+  renderLoading();
+
+  const apiPokemon = await getPokemonByName(searchValue);
+
+  if (apiPokemon === null) {
+    renderPokemonCards(previousPokemons);
+
+    showNotification(`<strong>${capitalize(searchValue)}</strong> nerastas`, 'error');
+
+    return;
+  }
+
+  const pokemon = mapPokemon(apiPokemon);
+
+  appState.wildPokemons = [pokemon];
+
+  renderPokemonCards(appState.wildPokemons);
+
+  showNotification(`<strong>${capitalize(pokemon.name)}</strong> rastas`, 'success');
+
+  searchInput.value = '';
 }
 
 function handleCatchClick(event) {
@@ -233,5 +270,9 @@ document.addEventListener('click', handleReleaseClick);
 document.addEventListener('click', handleTrainClick);
 document.addEventListener('click', handleDetailsClick);
 document.addEventListener('click', handleModalCloseClick);
+
+const searchForm = document.querySelector('.search-form');
+
+searchForm.addEventListener('submit', handlePokemonSearch);
 
 initApp();

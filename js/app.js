@@ -12,6 +12,7 @@ import { loadTrainer } from './storageService.js';
 import { renderCollection, renderCollectionLoading } from './collectionView.js';
 
 import { renderTrainer } from './trainerView.js';
+import { renderDashboard } from './dashboardView.js';
 
 import { catchPokemon, releasePokemon } from './pokemonService.js';
 
@@ -34,6 +35,7 @@ async function initApp() {
 
   renderCollection(trainer.collection);
   renderTrainer(trainer);
+  renderDashboard(trainer);
 
   const apiPokemons = await getRandomPokemons(10);
 
@@ -75,6 +77,7 @@ function handleCatchClick(event) {
 
   renderCollection(trainer.collection);
   renderTrainer(trainer);
+  renderDashboard(trainer);
 
   let message = `
     <strong>${capitalize(result.pokemon.name)}</strong> sėkmingai pridėtas į kolekciją
@@ -117,6 +120,7 @@ function handleReleaseClick(event) {
   }
 
   renderCollection(trainer.collection);
+  renderDashboard(trainer);
 
   showNotification(`<strong>${capitalize(result.pokemon.name)}</strong> paleistas iš kolekcijos`, 'success');
 }

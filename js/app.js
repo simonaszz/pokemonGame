@@ -58,6 +58,26 @@ async function loadRandomPokemons() {
   renderPokemonCards(appState.wildPokemons);
 }
 
+async function appendRandomPokemons(count = 10) {
+  const apiPokemons = await getRandomPokemons(count);
+
+  const newPokemons = apiPokemons.map((apiPokemon) => {
+    return mapPokemon(apiPokemon);
+  });
+
+  const uniqueNewPokemons = newPokemons.filter((newPokemon) => {
+    return !appState.wildPokemons.some((wildPokemon) => {
+      return wildPokemon.id === newPokemon.id;
+    });
+  });
+
+  appState.wildPokemons = [...appState.wildPokemons, ...uniqueNewPokemons];
+
+  renderPokemonCards(appState.wildPokemons);
+
+  return uniqueNewPokemons.length;
+}
+
 function renderFilteredCollection() {
   renderCollection(trainer.collection, {
     search: appState.collectionSearch,
@@ -107,6 +127,26 @@ async function handleRandomEncounterClick() {
   await loadRandomPokemons();
 
   showNotification('Atsirado nauji laukiniai Pokemonai', 'success');
+}
+
+async function handleLoadMorePokemonClick(event) {
+  const loadMoreButton = event.currentTarget;
+
+  loadMoreButton.disabled = true;
+  loadMoreButton.textContent = 'Kraunama...';
+
+  const addedCount = await appendRandomPokemons(10);
+
+  loadMoreButton.disabled = false;
+  loadMoreButton.textContent = 'Įkelti daugiau Pokemonų';
+
+  if (addedCount === 0) {
+    showNotification('Nepavyko pridėti naujų Pokemonų. Bandyk dar kartą.', 'error');
+
+    return;
+  }
+
+  showNotification(`Pridėta naujų Pokemonų: ${addedCount}`, 'success');
 }
 
 function handleCollectionSearchInput(event) {
@@ -374,12 +414,14 @@ document.addEventListener('click', handleFavoriteClick);
 
 const searchForm = document.querySelector('.search-form');
 const randomButton = document.querySelector('.random-btn');
+const loadMoreButton = document.querySelector('.load-more-btn');
 const collectionSearchInput = document.querySelector('#collection-search');
 const collectionSortSelect = document.querySelector('#collection-sort');
 const collectionTypeFilter = document.querySelector('.collection-type-filter');
 
 searchForm.addEventListener('submit', handlePokemonSearch);
 randomButton.addEventListener('click', handleRandomEncounterClick);
+loadMoreButton.addEventListener('click', handleLoadMorePokemonClick);
 collectionSearchInput.addEventListener('input', handleCollectionSearchInput);
 collectionSortSelect.addEventListener('change', handleCollectionSortChange);
 collectionTypeFilter.addEventListener('change', handleCollectionTypeChange);

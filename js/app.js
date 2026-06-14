@@ -13,7 +13,7 @@ import { renderCollection, renderCollectionLoading } from './collectionView.js';
 
 import { renderTrainer } from './trainerView.js';
 
-import { catchPokemon } from './pokemonService.js';
+import { catchPokemon, releasePokemon } from './pokemonService.js';
 
 import { showNotification, capitalize } from './notificationView.js';
 
@@ -93,6 +93,35 @@ function handleCatchClick(event) {
   showNotification(message, 'success');
 }
 
+function handleReleaseClick(event) {
+  const releaseButton = event.target.closest('.release-btn');
+
+  if (releaseButton === null) {
+    return;
+  }
+
+  const pokemonId = Number(releaseButton.dataset.pokemonId);
+
+  if (Number.isNaN(pokemonId)) {
+    showNotification('Neteisingas Pokémon ID', 'error');
+
+    return;
+  }
+
+  const result = releasePokemon(pokemonId);
+
+  if (result.success === false) {
+    showNotification('Pokémonas nerastas kolekcijoje', 'error');
+
+    return;
+  }
+
+  renderCollection(trainer.collection);
+
+  showNotification(`<strong>${capitalize(result.pokemon.name)}</strong> paleistas iš kolekcijos`, 'success');
+}
+
 document.addEventListener('click', handleCatchClick);
+document.addEventListener('click', handleReleaseClick);
 
 initApp();

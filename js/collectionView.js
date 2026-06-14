@@ -38,6 +38,14 @@ export function renderCollection(collection) {
 
             <p>Lygis: ${pokemon.level}</p>
             <p>XP: ${pokemon.xp}</p>
+
+            <button
+              type="button"
+              class="release-btn"
+              data-pokemon-id="${pokemon.id}"
+            >
+              Paleisti
+            </button>
           </div>
         </article>
       `;

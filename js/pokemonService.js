@@ -29,3 +29,27 @@ export function catchPokemon(pokemon) {
     xp: xpResult,
   };
 }
+
+export function releasePokemon(pokemonId) {
+  const pokemonIndex = trainer.collection.findIndex((pokemon) => {
+    return pokemon.id === pokemonId;
+  });
+
+  if (pokemonIndex === -1) {
+    return {
+      success: false,
+      reason: 'not_found',
+    };
+  }
+
+  const releasedPokemon = trainer.collection[pokemonIndex];
+
+  trainer.collection.splice(pokemonIndex, 1);
+
+  saveTrainer(trainer);
+
+  return {
+    success: true,
+    pokemon: releasedPokemon,
+  };
+}

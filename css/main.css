@@ -240,6 +240,36 @@ button {
   font-weight: 700;
 }
 
+.catch-btn:hover {
+  background-color: #fde047;
+}
+
+.catch-btn:focus-visible {
+  outline: 3px solid #fde68a;
+  outline-offset: 3px;
+}
+
+.release-btn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border: 1px solid #dc2626;
+  border-radius: 12px;
+  background-color: transparent;
+  color: #fecaca;
+  font-weight: 700;
+}
+
+.release-btn:hover {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+.release-btn:focus-visible {
+  outline: 3px solid #fca5a5;
+  outline-offset: 3px;
+}
+
 .notification {
   position: fixed;
   top: 20px;

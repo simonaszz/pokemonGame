@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Pokémon</title>
+    <title>Pokemon</title>
 
     <link rel="stylesheet" href="./css/main.css" />
   </head>
@@ -13,7 +13,7 @@
     <div class="app-layout">
       <aside class="sidebar" aria-label="Pagrindinė navigacija">
         <header class="sidebar-header">
-          <h1>Pokémon trenerio valdymas</h1>
+          <h1>Pokemon trenerio valdymas</h1>
           <p>Trenerio valdymo skydelis</p>
         </header>
 
@@ -28,12 +28,12 @@
 
       <main class="main-content">
         <section class="search-section" aria-labelledby="search-title">
-          <h2 id="search-title">Ieškoti Pokémono</h2>
+          <h2 id="search-title">Ieškoti Pokemono</h2>
 
           <form class="search-form">
-            <label for="pokemon-search">Pokémono vardas</label>
+            <label for="pokemon-search">Pokemono vardas</label>
 
-            <input id="pokemon-search" type="search" placeholder="Įvesk Pokémono vardą..." />
+            <input id="pokemon-search" type="search" placeholder="Įvesk Pokemono vardą..." />
 
             <button type="submit">Ieškoti</button>
           </form>
@@ -44,11 +44,11 @@
         <section class="wild-section" aria-labelledby="wild-title">
           <div class="section-heading">
             <p class="eyebrow">Laukinė zona</p>
-            <h2 id="wild-title">Laukiniai Pokémonai</h2>
+            <h2 id="wild-title">Laukiniai Pokemonai</h2>
           </div>
 
           <div id="pokemon-grid" class="pokemon-grid">
-            <!-- Čia dėsime Pokémon korteles -->
+            <!-- Čia dėsime Pokemon korteles -->
           </div>
         </section>
 
@@ -60,7 +60,7 @@
 
           <div class="collection-controls">
             <label for="collection-search">Ieškoti kolekcijoje</label>
-            <input id="collection-search" type="search" placeholder="Ieškoti pagauto Pokémono..." />
+            <input id="collection-search" type="search" placeholder="Ieškoti pagauto Pokemono..." />
 
             <label for="collection-sort">Rūšiuoti kolekciją</label>
             <select id="collection-sort">
@@ -70,10 +70,104 @@
               <option value="name-az">Vardas A-Z</option>
               <option value="attack-highest">Didžiausias Attack</option>
             </select>
+
+            <fieldset class="collection-type-filter">
+              <legend>Filtruoti pagal tipus</legend>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="normal" />
+                normal
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="fire" />
+                fire
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="water" />
+                water
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="electric" />
+                electric
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="grass" />
+                grass
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="ice" />
+                ice
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="fighting" />
+                fighting
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="poison" />
+                poison
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="ground" />
+                ground
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="flying" />
+                flying
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="psychic" />
+                psychic
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="bug" />
+                bug
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="rock" />
+                rock
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="ghost" />
+                ghost
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="dragon" />
+                dragon
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="dark" />
+                dark
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="steel" />
+                steel
+              </label>
+
+              <label>
+                <input type="checkbox" name="collection-type" value="fairy" />
+                fairy
+              </label>
+            </fieldset>
           </div>
 
           <div id="collection-list" class="collection-list">
-            <!-- Čia įdėsime pagautus Pokémonus -->
+            <!-- Čia dėsime pagautus Pokemonus -->
           </div>
         </section>
       </main>

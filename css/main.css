@@ -269,6 +269,39 @@ button {
   outline-offset: 3px;
 }
 
+.collection-type-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #334155;
+  border-radius: 14px;
+}
+
+.collection-type-filter legend {
+  padding: 0 6px;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.collection-type-filter label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 9px;
+  border: 1px solid #334155;
+  border-radius: 999px;
+  background-color: #111827;
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.collection-type-filter input {
+  accent-color: #facc15;
+}
+
 /* Collection cards */
 
 .collection-card {
@@ -620,6 +653,10 @@ button {
   .collection-controls {
     grid-template-columns: 1fr 1fr;
     align-items: end;
+  }
+
+  .collection-type-filter {
+    grid-column: 1 / -1;
   }
 
   .collection-card-stats {

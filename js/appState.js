@@ -3,4 +3,5 @@ export const appState = {
   selectedPokemonId: null,
   collectionSearch: '',
   collectionSort: 'caught-newest',
+  collectionTypes: [],
 };

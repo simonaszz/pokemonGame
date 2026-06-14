@@ -25,10 +25,20 @@ export function renderCollection(collection, options = {}) {
 
   const searchValue = options.search ?? '';
   const sortValue = options.sort ?? 'caught-newest';
+  const selectedTypes = options.types ?? [];
 
-  const filteredCollection = collection
+  const collectionHtml = collection
     .filter((pokemon) => {
       return pokemon.name.toLowerCase().includes(searchValue.toLowerCase());
+    })
+    .filter((pokemon) => {
+      if (selectedTypes.length === 0) {
+        return true;
+      }
+
+      return selectedTypes.every((type) => {
+        return pokemon.types.includes(type);
+      });
     })
     .sort((firstPokemon, secondPokemon) => {
       if (sortValue === 'favorite-first') {
@@ -54,24 +64,24 @@ export function renderCollection(collection, options = {}) {
       }
 
       return getCaughtTime(secondPokemon) - getCaughtTime(firstPokemon);
-    });
+    })
+    .map((pokemon) => {
+      return createCollectionCard(pokemon);
+    })
+    .join('');
 
-  if (filteredCollection.length === 0) {
+  if (collectionHtml === '') {
     collectionList.innerHTML = `
       <div class="empty-state">
-        <p>Pagal paiešką nieko nerasta.</p>
-        <span>Pabandyk kitą Pokemon vardą.</span>
+        <p>Pagal filtrus nieko nerasta.</p>
+        <span>Pabandyk kitą vardą, tipą arba rūšiavimą.</span>
       </div>
     `;
 
     return;
   }
 
-  collectionList.innerHTML = filteredCollection
-    .map((pokemon) => {
-      return createCollectionCard(pokemon);
-    })
-    .join('');
+  collectionList.innerHTML = collectionHtml;
 }
 
 function createCollectionCard(pokemon) {

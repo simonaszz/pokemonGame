@@ -62,6 +62,7 @@ function renderFilteredCollection() {
   renderCollection(trainer.collection, {
     search: appState.collectionSearch,
     sort: appState.collectionSort,
+    types: appState.collectionTypes,
   });
 }
 
@@ -116,6 +117,16 @@ function handleCollectionSearchInput(event) {
 
 function handleCollectionSortChange(event) {
   appState.collectionSort = event.target.value;
+
+  renderFilteredCollection();
+}
+
+function handleCollectionTypeChange() {
+  const selectedTypeInputs = document.querySelectorAll('input[name="collection-type"]:checked');
+
+  appState.collectionTypes = Array.from(selectedTypeInputs).map((typeInput) => {
+    return typeInput.value;
+  });
 
   renderFilteredCollection();
 }
@@ -365,10 +376,12 @@ const searchForm = document.querySelector('.search-form');
 const randomButton = document.querySelector('.random-btn');
 const collectionSearchInput = document.querySelector('#collection-search');
 const collectionSortSelect = document.querySelector('#collection-sort');
+const collectionTypeFilter = document.querySelector('.collection-type-filter');
 
 searchForm.addEventListener('submit', handlePokemonSearch);
 randomButton.addEventListener('click', handleRandomEncounterClick);
 collectionSearchInput.addEventListener('input', handleCollectionSearchInput);
 collectionSortSelect.addEventListener('change', handleCollectionSortChange);
+collectionTypeFilter.addEventListener('change', handleCollectionTypeChange);
 
 initApp();

@@ -84,6 +84,7 @@ button {
 .wild-section,
 .collection-section,
 .stats-card,
+.leaderboard-card,
 .upgrade-card {
   padding: 20px;
   border: 1px solid #334155;
@@ -93,6 +94,7 @@ button {
 
 .trainer-card,
 .stats-card,
+.leaderboard-card,
 .upgrade-card {
   margin-bottom: 20px;
 }
@@ -191,6 +193,35 @@ button {
 .stats-list {
   margin-top: 16px;
   list-style: none;
+}
+
+.leaderboard-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+  list-style: none;
+}
+
+.leaderboard-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  background-color: #0f172a;
+  color: #cbd5e1;
+}
+
+.leaderboard-item strong {
+  margin-right: 8px;
+  color: #facc15;
+}
+
+.leaderboard-item-current {
+  border-color: #facc15;
+  background-color: #1f2937;
+  color: #f8fafc;
 }
 
 .stats-list li {

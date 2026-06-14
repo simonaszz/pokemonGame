@@ -13,6 +13,7 @@ import { renderCollection, renderCollectionLoading } from './collectionView.js';
 
 import { renderTrainer } from './trainerView.js';
 import { renderDashboard } from './dashboardView.js';
+import { renderLeaderboard } from './leaderboardView.js';
 
 import { catchPokemon, releasePokemon, trainPokemon, toggleFavoritePokemon } from './pokemonService.js';
 import { showNotification, capitalize } from './notificationView.js';
@@ -38,6 +39,7 @@ async function initApp() {
   renderFilteredCollection();
   renderTrainer(trainer);
   renderDashboard(trainer);
+  renderLeaderboard(trainer);
 
   await loadRandomPokemons();
 
@@ -233,6 +235,7 @@ function handleCatchClick(event) {
   renderFilteredCollection();
   renderTrainer(trainer);
   renderDashboard(trainer);
+  renderLeaderboard(trainer);
 
   let message = `
     <strong>${capitalize(result.pokemon.name)}</strong> sėkmingai pridėtas į kolekciją

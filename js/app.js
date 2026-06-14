@@ -18,6 +18,8 @@ import { catchPokemon, releasePokemon, trainPokemon } from './pokemonService.js'
 
 import { showNotification, capitalize } from './notificationView.js';
 
+import { renderPokemonModal, closePokemonModal } from './pokemonModalView.js';
+
 async function initApp() {
   console.log('Trenerio objektas:', trainer);
 
@@ -169,8 +171,52 @@ function handleTrainClick(event) {
   showNotification(message, 'success');
 }
 
+function handleDetailsClick(event) {
+  const detailsButton = event.target.closest('.details-btn');
+
+  if (detailsButton === null) {
+    return;
+  }
+
+  const pokemonId = Number(detailsButton.dataset.pokemonId);
+
+  if (Number.isNaN(pokemonId)) {
+    showNotification('Neteisingas Pokemon ID', 'error');
+
+    return;
+  }
+
+  const selectedPokemon = trainer.collection.find((pokemon) => {
+    return pokemon.id === pokemonId;
+  });
+
+  if (selectedPokemon === undefined) {
+    showNotification('Pokemonas nerastas kolekcijoje', 'error');
+
+    return;
+  }
+
+  appState.selectedPokemonId = pokemonId;
+
+  renderPokemonModal(selectedPokemon);
+}
+
+function handleModalCloseClick(event) {
+  const closeButton = event.target.closest('.modal-close-btn');
+
+  if (closeButton === null) {
+    return;
+  }
+
+  appState.selectedPokemonId = null;
+
+  closePokemonModal();
+}
+
 document.addEventListener('click', handleCatchClick);
 document.addEventListener('click', handleReleaseClick);
 document.addEventListener('click', handleTrainClick);
+document.addEventListener('click', handleDetailsClick);
+document.addEventListener('click', handleModalCloseClick);
 
 initApp();

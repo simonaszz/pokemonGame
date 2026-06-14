@@ -36,8 +36,7 @@ function createCollectionCard(pokemon) {
       <img
         class="pokemon-card-image"
         src="${pokemon.image}"
-        alt="${pokemon.name}"
-      />
+        alt="${pokemon.name}"/>
 
       <div class="pokemon-card-content">
         <h3>${pokemon.name}</h3>
@@ -48,19 +47,24 @@ function createCollectionCard(pokemon) {
         <p>Attack: ${pokemon.stats.attack}</p>
         <p>Defense: ${pokemon.stats.defense}</p>
 
+         <button
+           type="button"
+           class="details-btn"
+           data-pokemon-id="${pokemon.id}">
+           Detaliau
+           </button>
+
         <button
           type="button"
           class="train-btn"
-          data-pokemon-id="${pokemon.id}"
-        >
+          data-pokemon-id="${pokemon.id}">
           Treniruoti
         </button>
 
         <button
           type="button"
           class="release-btn"
-          data-pokemon-id="${pokemon.id}"
-        >
+          data-pokemon-id="${pokemon.id}">
           Paleisti
         </button>
       </div>

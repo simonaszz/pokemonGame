@@ -290,6 +290,88 @@ button {
   outline-offset: 3px;
 }
 
+.details-btn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border: 1px solid #38bdf8;
+  border-radius: 12px;
+  background-color: transparent;
+  color: #bae6fd;
+  font-weight: 700;
+}
+
+.details-btn:hover {
+  background-color: #38bdf8;
+  color: #082f49;
+}
+
+.details-btn:focus-visible {
+  outline: 3px solid #7dd3fc;
+  outline-offset: 3px;
+}
+
+.pokemon-modal {
+  width: min(92vw, 520px);
+  padding: 0;
+  border: 0;
+  border-radius: 24px;
+  background-color: #111827;
+  color: #f9fafb;
+  box-shadow: 0 24px 80px rgb(0 0 0 / 0.45);
+}
+
+.pokemon-modal::backdrop {
+  background-color: rgb(0 0 0 / 0.65);
+}
+
+.pokemon-modal-content {
+  position: relative;
+  padding: 24px;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #374151;
+  border-radius: 999px;
+  background-color: #1f2937;
+  color: #f9fafb;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  background-color: #374151;
+}
+
+.pokemon-modal-image {
+  display: block;
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 16px;
+  object-fit: contain;
+}
+
+.pokemon-modal-info h2 {
+  margin-bottom: 12px;
+}
+
+.pokemon-modal-info p {
+  margin-bottom: 8px;
+}
+
+.pokemon-modal-stats {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid #374151;
+  border-radius: 16px;
+  background-color: #0f172a;
+}
+
 .notification {
   position: fixed;
   top: 20px;

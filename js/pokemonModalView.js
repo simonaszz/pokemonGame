@@ -22,6 +22,9 @@ export function renderPokemonModal(pokemon) {
         <h2>${capitalize(pokemon.name)}</h2>
 
         <p>Tipai: ${pokemon.types.join(', ')}</p>
+        <p>Gebėjimai: ${formatAbilities(pokemon.abilities)}</p>
+        <p>Ūgis: ${formatHeight(pokemon.height)}</p>
+        <p>Svoris: ${formatWeight(pokemon.weight)}</p>
         <p>Lygis: ${pokemon.level}</p>
         <p>XP: ${pokemon.xp}</p>
         <p>Sugauta: ${formatCaughtAt(pokemon.caughtAt)}</p>
@@ -32,19 +35,23 @@ export function renderPokemonModal(pokemon) {
           <p>Defense: ${pokemon.stats.defense}</p>
         </div>
 
-        <button
-          type="button"
-          class="train-btn"
-          data-pokemon-id="${pokemon.id}">
-          Treniruoti
-        </button>
+        <div class="pokemon-modal-actions">
+          <button
+            type="button"
+            class="train-btn"
+            data-pokemon-id="${pokemon.id}"
+          >
+            Treniruoti
+          </button>
 
-        <button
-         type="button"
-         class="release-btn"
-         data-pokemon-id="${pokemon.id}">
-         Paleisti
-        </button>
+          <button
+            type="button"
+            class="release-btn"
+            data-pokemon-id="${pokemon.id}"
+          >
+            Paleisti
+          </button>
+        </div>
       </div>
     </article>
   `;
@@ -62,6 +69,30 @@ export function closePokemonModal() {
 
 function capitalize(text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function formatAbilities(abilities) {
+  if (abilities === undefined || abilities.length === 0) {
+    return '-';
+  }
+
+  return abilities.join(', ');
+}
+
+function formatHeight(height) {
+  if (height === undefined) {
+    return '-';
+  }
+
+  return `${height / 10} m`;
+}
+
+function formatWeight(weight) {
+  if (weight === undefined) {
+    return '-';
+  }
+
+  return `${weight / 10} kg`;
 }
 
 function formatCaughtAt(caughtAt) {

@@ -153,6 +153,16 @@ function handleTrainClick(event) {
   renderCollection(trainer.collection);
   renderDashboard(trainer);
 
+  if (appState.selectedPokemonId === pokemonId) {
+    const updatedPokemon = trainer.collection.find((pokemon) => {
+      return pokemon.id === pokemonId;
+    });
+
+    if (updatedPokemon !== undefined) {
+      renderPokemonModal(updatedPokemon);
+    }
+  }
+
   let message = `
     <strong>${capitalize(result.pokemon.name)}</strong> treniruotas
     <p>+${result.xp.xpGained} XP</p>

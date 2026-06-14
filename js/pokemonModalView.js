@@ -30,11 +30,21 @@ export function renderPokemonModal(pokemon) {
           <p>Attack: ${pokemon.stats.attack}</p>
           <p>Defense: ${pokemon.stats.defense}</p>
         </div>
+
+        <button
+          type="button"
+          class="train-btn"
+          data-pokemon-id="${pokemon.id}"
+        >
+          Treniruoti
+        </button>
       </div>
     </article>
   `;
 
-  modal.showModal();
+  if (!modal.open) {
+    modal.showModal();
+  }
 }
 
 export function closePokemonModal() {

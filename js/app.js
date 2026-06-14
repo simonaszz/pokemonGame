@@ -39,6 +39,14 @@ async function initApp() {
   renderTrainer(trainer);
   renderDashboard(trainer);
 
+  await loadRandomPokemons();
+
+  console.log('Aplikacijos būsena:', appState);
+}
+
+async function loadRandomPokemons() {
+  renderLoading();
+
   const apiPokemons = await getRandomPokemons(10);
 
   const pokemons = apiPokemons.map((apiPokemon) => {
@@ -47,9 +55,7 @@ async function initApp() {
 
   appState.wildPokemons = pokemons;
 
-  console.log('Aplikacijos būsena:', appState);
-
-  renderPokemonCards(pokemons);
+  renderPokemonCards(appState.wildPokemons);
 }
 
 async function handlePokemonSearch(event) {
@@ -87,6 +93,12 @@ async function handlePokemonSearch(event) {
   showNotification(`<strong>${capitalize(pokemon.name)}</strong> rastas`, 'success');
 
   searchInput.value = '';
+}
+
+async function handleRandomEncounterClick() {
+  await loadRandomPokemons();
+
+  showNotification('Atsirado nauji laukiniai Pokémonai', 'success');
 }
 
 function handleCatchClick(event) {
@@ -233,7 +245,7 @@ function handleDetailsClick(event) {
   const pokemonId = Number(detailsButton.dataset.pokemonId);
 
   if (Number.isNaN(pokemonId)) {
-    showNotification('Neteisingas Pokemon ID', 'error');
+    showNotification('Neteisingas Pokémon ID', 'error');
 
     return;
   }
@@ -243,7 +255,7 @@ function handleDetailsClick(event) {
   });
 
   if (selectedPokemon === undefined) {
-    showNotification('Pokemonas nerastas kolekcijoje', 'error');
+    showNotification('Pokémonas nerastas kolekcijoje', 'error');
 
     return;
   }
@@ -272,7 +284,9 @@ document.addEventListener('click', handleDetailsClick);
 document.addEventListener('click', handleModalCloseClick);
 
 const searchForm = document.querySelector('.search-form');
+const randomButton = document.querySelector('.random-btn');
 
 searchForm.addEventListener('submit', handlePokemonSearch);
+randomButton.addEventListener('click', handleRandomEncounterClick);
 
 initApp();

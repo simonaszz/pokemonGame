@@ -24,6 +24,7 @@ export function renderPokemonModal(pokemon) {
         <p>Tipai: ${pokemon.types.join(', ')}</p>
         <p>Lygis: ${pokemon.level}</p>
         <p>XP: ${pokemon.xp}</p>
+        <p>Sugauta: ${formatCaughtAt(pokemon.caughtAt)}</p>
 
         <div class="pokemon-modal-stats">
           <p>HP: ${pokemon.stats.hp}</p>
@@ -61,4 +62,12 @@ export function closePokemonModal() {
 
 function capitalize(text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function formatCaughtAt(caughtAt) {
+  if (caughtAt === undefined) {
+    return '-';
+  }
+
+  return new Date(caughtAt).toLocaleString('lt-LT');
 }

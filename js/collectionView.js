@@ -36,38 +36,36 @@ function createCollectionCard(pokemon) {
       <img
         class="pokemon-card-image"
         src="${pokemon.image}"
-        alt="${pokemon.name}"/>
+        alt="${pokemon.name}"
+      />
 
       <div class="pokemon-card-content">
         <h3>${pokemon.name}</h3>
 
+        <p>Tipai: ${pokemon.types.join(', ')}</p>
         <p>Lygis: ${pokemon.level}</p>
         <p>XP: ${pokemon.xp}</p>
         <p>HP: ${pokemon.stats.hp}</p>
         <p>Attack: ${pokemon.stats.attack}</p>
         <p>Defense: ${pokemon.stats.defense}</p>
-
-         <button
-           type="button"
-           class="details-btn"
-           data-pokemon-id="${pokemon.id}">
-           Detaliau
-           </button>
+        <p>Sugauta: ${formatCaughtAt(pokemon.caughtAt)}</p>
 
         <button
           type="button"
-          class="train-btn"
-          data-pokemon-id="${pokemon.id}">
-          Treniruoti
-        </button>
-
-        <button
-          type="button"
-          class="release-btn"
-          data-pokemon-id="${pokemon.id}">
-          Paleisti
+          class="details-btn"
+          data-pokemon-id="${pokemon.id}"
+        >
+          Detaliau
         </button>
       </div>
     </article>
   `;
+}
+
+function formatCaughtAt(caughtAt) {
+  if (caughtAt === undefined) {
+    return '-';
+  }
+
+  return new Date(caughtAt).toLocaleString('lt-LT');
 }

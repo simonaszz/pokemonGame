@@ -19,7 +19,14 @@ export function catchPokemon(pokemon) {
     };
   }
 
-  trainer.collection.push(pokemon);
+  const caughtPokemon = {
+    ...pokemon,
+    types: [...pokemon.types],
+    stats: { ...pokemon.stats },
+    caughtAt: new Date().toISOString(),
+  };
+
+  trainer.collection.push(caughtPokemon);
 
   const xpResult = addTrainerXp(XP_FOR_CATCH);
 
@@ -27,7 +34,7 @@ export function catchPokemon(pokemon) {
 
   return {
     success: true,
-    pokemon: pokemon,
+    pokemon: caughtPokemon,
     xp: xpResult,
   };
 }

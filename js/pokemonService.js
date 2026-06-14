@@ -23,6 +23,7 @@ export function catchPokemon(pokemon) {
     ...pokemon,
     types: [...pokemon.types],
     stats: { ...pokemon.stats },
+    isFavorite: false,
     caughtAt: new Date().toISOString(),
   };
 
@@ -107,6 +108,28 @@ export function trainPokemon(pokemonId, statName) {
       leveledUp: levelsGained.length > 0,
       levelsGained: levelsGained,
     },
+  };
+}
+
+export function toggleFavoritePokemon(pokemonId) {
+  const pokemon = trainer.collection.find((collectionPokemon) => {
+    return collectionPokemon.id === pokemonId;
+  });
+
+  if (pokemon === undefined) {
+    return {
+      success: false,
+      reason: 'not_found',
+    };
+  }
+
+  pokemon.isFavorite = !pokemon.isFavorite;
+
+  saveTrainer(trainer);
+
+  return {
+    success: true,
+    pokemon: pokemon,
   };
 }
 

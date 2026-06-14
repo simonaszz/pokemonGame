@@ -14,8 +14,7 @@ import { renderCollection, renderCollectionLoading } from './collectionView.js';
 import { renderTrainer } from './trainerView.js';
 import { renderDashboard } from './dashboardView.js';
 
-import { catchPokemon, releasePokemon, trainPokemon } from './pokemonService.js';
-
+import { catchPokemon, releasePokemon, trainPokemon, toggleFavoritePokemon } from './pokemonService.js';
 import { showNotification, capitalize } from './notificationView.js';
 
 import { renderPokemonModal, closePokemonModal } from './pokemonModalView.js';
@@ -119,6 +118,40 @@ function handleCollectionSortChange(event) {
   appState.collectionSort = event.target.value;
 
   renderFilteredCollection();
+}
+
+function handleFavoriteClick(event) {
+  const favoriteButton = event.target.closest('.favorite-btn');
+
+  if (favoriteButton === null) {
+    return;
+  }
+
+  const pokemonId = Number(favoriteButton.dataset.pokemonId);
+
+  if (Number.isNaN(pokemonId)) {
+    showNotification('Neteisingas Pokemon ID', 'error');
+
+    return;
+  }
+
+  const result = toggleFavoritePokemon(pokemonId);
+
+  if (result.success === false) {
+    showNotification('Pokemonas nerastas kolekcijoje', 'error');
+
+    return;
+  }
+
+  renderFilteredCollection();
+
+  if (result.pokemon.isFavorite) {
+    showNotification(`<strong>${capitalize(result.pokemon.name)}</strong> pridėtas prie mėgstamų`, 'success');
+
+    return;
+  }
+
+  showNotification(`<strong>${capitalize(result.pokemon.name)}</strong> pašalintas iš mėgstamų`, 'success');
 }
 
 function handleCatchClick(event) {
@@ -326,6 +359,7 @@ document.addEventListener('click', handleReleaseClick);
 document.addEventListener('click', handleTrainClick);
 document.addEventListener('click', handleDetailsClick);
 document.addEventListener('click', handleModalCloseClick);
+document.addEventListener('click', handleFavoriteClick);
 
 const searchForm = document.querySelector('.search-form');
 const randomButton = document.querySelector('.random-btn');

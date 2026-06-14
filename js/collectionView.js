@@ -31,6 +31,16 @@ export function renderCollection(collection, options = {}) {
       return pokemon.name.toLowerCase().includes(searchValue.toLowerCase());
     })
     .sort((firstPokemon, secondPokemon) => {
+      if (sortValue === 'favorite-first') {
+        const favoriteDifference = Number(secondPokemon.isFavorite === true) - Number(firstPokemon.isFavorite === true);
+
+        if (favoriteDifference !== 0) {
+          return favoriteDifference;
+        }
+
+        return getCaughtTime(secondPokemon) - getCaughtTime(firstPokemon);
+      }
+
       if (sortValue === 'level-highest') {
         return secondPokemon.level - firstPokemon.level;
       }
@@ -74,10 +84,19 @@ function createCollectionCard(pokemon) {
           alt="${pokemon.name}"
         />
 
-        <div>
+        <div class="collection-card-title">
           <h3>${pokemon.name}</h3>
           <p class="collection-card-level">Level ${pokemon.level}</p>
         </div>
+
+        <button
+          type="button"
+          class="${getFavoriteButtonClass(pokemon)}"
+          data-pokemon-id="${pokemon.id}"
+          aria-label="Pažymėti kaip mėgstamą"
+        >
+          ${pokemon.isFavorite === true ? '★' : '☆'}
+        </button>
       </div>
 
       <div class="type-list">
@@ -127,6 +146,14 @@ function createTypeBadges(types) {
       return `<span class="type-badge">${type}</span>`;
     })
     .join('');
+}
+
+function getFavoriteButtonClass(pokemon) {
+  if (pokemon.isFavorite === true) {
+    return 'favorite-btn favorite-btn-active';
+  }
+
+  return 'favorite-btn';
 }
 
 function getCaughtTime(pokemon) {

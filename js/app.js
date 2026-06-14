@@ -124,6 +124,11 @@ function handleReleaseClick(event) {
   renderCollection(trainer.collection);
   renderDashboard(trainer);
 
+  if (appState.selectedPokemonId === pokemonId) {
+    appState.selectedPokemonId = null;
+    closePokemonModal();
+  }
+
   showNotification(`<strong>${capitalize(result.pokemon.name)}</strong> paleistas iš kolekcijos`, 'success');
 }
 

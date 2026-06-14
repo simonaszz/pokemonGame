@@ -40,15 +40,30 @@ export function renderPokemonModal(pokemon) {
             type="button"
             class="train-btn"
             data-pokemon-id="${pokemon.id}"
-          >
-            Treniruoti
+            data-stat-name="hp">
+            Treniruoti HP
+          </button>
+
+          <button
+            type="button"
+            class="train-btn"
+            data-pokemon-id="${pokemon.id}"
+            data-stat-name="attack">
+            Treniruoti Attack
+          </button>
+
+          <button
+            type="button"
+            class="train-btn"
+            data-pokemon-id="${pokemon.id}"
+            data-stat-name="defense">
+            Treniruoti Defense
           </button>
 
           <button
             type="button"
             class="release-btn"
-            data-pokemon-id="${pokemon.id}"
-          >
+            data-pokemon-id="${pokemon.id}">
             Paleisti
           </button>
         </div>

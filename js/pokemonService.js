@@ -63,7 +63,7 @@ export function releasePokemon(pokemonId) {
   };
 }
 
-export function trainPokemon(pokemonId) {
+export function trainPokemon(pokemonId, statName) {
   const pokemon = trainer.collection.find((collectionPokemon) => {
     return collectionPokemon.id === pokemonId;
   });
@@ -75,6 +75,14 @@ export function trainPokemon(pokemonId) {
     };
   }
 
+  if (!isTrainableStat(statName)) {
+    return {
+      success: false,
+      reason: 'invalid_stat',
+      pokemon: pokemon,
+    };
+  }
+
   pokemon.xp += XP_FOR_TRAINING;
 
   const levelsGained = [];
@@ -83,9 +91,7 @@ export function trainPokemon(pokemonId) {
     pokemon.xp -= getRequiredPokemonXp(pokemon);
     pokemon.level += 1;
 
-    pokemon.stats.hp += STAT_INCREASE_ON_LEVEL_UP;
-    pokemon.stats.attack += STAT_INCREASE_ON_LEVEL_UP;
-    pokemon.stats.defense += STAT_INCREASE_ON_LEVEL_UP;
+    pokemon.stats[statName] += STAT_INCREASE_ON_LEVEL_UP;
 
     levelsGained.push(pokemon.level);
   }
@@ -95,6 +101,7 @@ export function trainPokemon(pokemonId) {
   return {
     success: true,
     pokemon: pokemon,
+    trainedStat: statName,
     xp: {
       xpGained: XP_FOR_TRAINING,
       leveledUp: levelsGained.length > 0,
@@ -105,4 +112,8 @@ export function trainPokemon(pokemonId) {
 
 function getRequiredPokemonXp(pokemon) {
   return pokemon.level * 50;
+}
+
+function isTrainableStat(statName) {
+  return statName === 'hp' || statName === 'attack' || statName === 'defense';
 }

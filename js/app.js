@@ -209,6 +209,7 @@ function handleTrainClick(event) {
   }
 
   const pokemonId = Number(trainButton.dataset.pokemonId);
+  const statName = trainButton.dataset.statName;
 
   if (Number.isNaN(pokemonId)) {
     showNotification('Neteisingas Pokemon ID', 'error');
@@ -216,9 +217,15 @@ function handleTrainClick(event) {
     return;
   }
 
-  const result = trainPokemon(pokemonId);
+  const result = trainPokemon(pokemonId, statName);
 
   if (result.success === false) {
+    if (result.reason === 'invalid_stat') {
+      showNotification('Neteisingai pasirinkta statistika', 'error');
+
+      return;
+    }
+
     showNotification('Pokemonas nerastas kolekcijoje', 'error');
 
     return;
@@ -238,7 +245,8 @@ function handleTrainClick(event) {
   }
 
   let message = `
-    <strong>${capitalize(result.pokemon.name)}</strong> treniruotas
+    <strong>${capitalize(result.pokemon.name)}</strong> treniruotas:
+    ${formatStatName(result.trainedStat)}
     <p>+${result.xp.xpGained} XP</p>
   `;
 
@@ -248,7 +256,7 @@ function handleTrainClick(event) {
     message += `
       <p><strong>Level Up!</strong></p>
       <p>Pasiektas ${reachedLevel} lygis</p>
-      <p>Stats padidėjo</p>
+      <p>${formatStatName(result.trainedStat)} padidėjo</p>
     `;
   }
 
@@ -295,6 +303,22 @@ function handleModalCloseClick(event) {
   appState.selectedPokemonId = null;
 
   closePokemonModal();
+}
+
+function formatStatName(statName) {
+  if (statName === 'hp') {
+    return 'HP';
+  }
+
+  if (statName === 'attack') {
+    return 'Attack';
+  }
+
+  if (statName === 'defense') {
+    return 'Defense';
+  }
+
+  return statName;
 }
 
 document.addEventListener('click', handleCatchClick);

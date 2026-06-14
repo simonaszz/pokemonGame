@@ -52,7 +52,7 @@ function createCollectionCard(pokemon) {
           type="button"
           class="train-btn"
           data-pokemon-id="${pokemon.id}"
-         >
+        >
           Treniruoti
         </button>
 

@@ -3,7 +3,6 @@ import { saveTrainer } from './storageService.js';
 import { addTrainerXp } from './trainerService.js';
 
 const XP_FOR_CATCH = 25;
-
 const XP_FOR_TRAINING = 20;
 const STAT_INCREASE_ON_LEVEL_UP = 2;
 

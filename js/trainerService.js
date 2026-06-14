@@ -2,6 +2,7 @@ import { trainer } from './trainerState.js';
 
 export function addTrainerXp(amount) {
   trainer.xp += amount;
+  trainer.totalXp += amount;
 
   const levelsGained = [];
 

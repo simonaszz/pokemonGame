@@ -32,6 +32,7 @@ async function initApp() {
     trainer.name = savedTrainer.name;
     trainer.level = savedTrainer.level;
     trainer.xp = savedTrainer.xp;
+    trainer.totalXp = savedTrainer.totalXp ?? savedTrainer.xp ?? 0;
     trainer.collection = savedTrainer.collection;
   }
 
